@@ -3,53 +3,86 @@
         <h3 class="text-center fw-bold">Application For Employment</h3>
     </div>
     <div class="d-flex mt-5">
-        <InputBlank label="Position" maxWordCount="50" />
-        <InputBlank label="Mode of Application" maxWordCount="20" />
+        <InputComponent label="Position" maxWordCount="50" />
+        <InputComponent label="Mode of Application" maxWordCount="20" />
     </div>
     <table class="mt-5 personal-info-table">
         <tr class="d-flex">
-            <InputBlank label="Name" maxWordCount="50" />
-            <InputBlank label="Gender" maxWordCount="20" />
+            <InputComponent label="Name" maxWordCount="50" />
+            <InputComponent label="Gender" maxWordCount="20" />
         </tr>
         <tr>
-            <InputBlank label="Address" maxWordCount="200" />
+            <InputComponent label="Address" maxWordCount="200" />
         </tr>
         <tr>
-            <InputBlank label="Email" maxWordCount="70" class="w-3/4"/>
+            <InputComponent label="Email" maxWordCount="70" class="w-3/4"/>
         </tr>
         <tr class="d-flex">
-            <InputBlank label="NRIC No" maxWordCount="20" />
-            <InputBlank label="Date of Birth" maxWordCount="20" />
+            <InputComponent class="w-50 me-0" label="NRIC No" maxWordCount="20" />
+            <div class="d-flex w-50">
+                <div class="h-100 date-label">Date of Birth: </div>
+                <VueDatePicker 
+                    class="date-field"
+                    @update:model-value="handleDOBInput" 
+                    :model-value="dateOfBirth"
+                    v-model="dateOfBirth"
+                    :format="dateFormat"
+                    :enable-time-picker="false" 
+                    auto-apply
+                    :disabled-dates="disabledAfterToday"/>
+            </div>
         </tr>
         <tr class="d-flex">
-            <InputBlank label="Citizenship" maxWordCount="20" />
-            <InputBlank label="Race" maxWordCount="20" />
+            <InputComponent label="Citizenship" maxWordCount="20" />
+            <InputComponent label="Race" maxWordCount="20" />
         </tr>
         <tr class="d-flex">
-            <InputBlank label="H/Phone" maxWordCount="20" />
-            <InputBlank label="Matital Status" maxWordCount="20" />
+            <InputComponent label="H/Phone" maxWordCount="20" />
+            <InputComponent label="Marital Status" maxWordCount="20" />
         </tr>
         <tr class="d-flex">
-            <InputBlank label="Driving Liscense" maxWordCount="20" />
-            <InputBlank label="Current Salary" maxWordCount="20" />
+            <InputComponent label="Driving License" maxWordCount="20" />
+            <InputComponent label="Current Salary" maxWordCount="20" />
         </tr>
         <tr class="d-flex">
-            <InputBlank label="Earliest Commencement Date" maxWordCount="20" />
-            <InputBlank label="Expected Salary" maxWordCount="20" />
+            <div class="d-flex w-50 mx-3">
+                <div class="h-100" style="width: 40%;">Earliest Commencement Date: </div>
+                <VueDatePicker 
+                    class="date-field"
+                    @update:model-value="handleECDInput" 
+                    :model-value="earliestcommencement"
+                    v-model="earliestcommencement"
+                    :format="dateFormat"
+                    :enable-time-picker="false" 
+                    auto-apply/>
+            </div>
+            <InputComponent class="w-50" label="Expected Salary" maxWordCount="20" />
         </tr>
     </table>
 </template>
 
-<script>
-import InputBlank from '@/components/InputBlank.vue';
-export default {
-  components: {
-    InputBlank,
-  },
-  methods: {
-    handleInput(data) {
-      this.$emit('personalInfoChanged', data);
-    },
-  },
-};
+<script setup>
+import InputComponent from '@/components/InputComponent.vue';
+import { ref, watch, computed } from 'vue';
+import { useStore } from 'vuex';
+
+const $store = useStore();
+const dateOfBirth = ref('');
+const earliestcommencement = ref('');
+const dateFormat = 'dd-MM-yyyy';
+
+const handleDOBInput = (modelData) => {
+    $store.commit('updateFormData', { ["Date of Birth".toString()]: modelData });
+}
+
+const handleECDInput = (modelData) => {
+    $store.commit('updateFormData', { ["Earliest Commencement Date".toString()]: modelData });
+}
+
+const disabledAfterToday = (date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return date > today
+}
+
 </script>

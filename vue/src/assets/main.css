@@ -125,3 +125,11 @@ input[type="checkbox"] {
   text-align: center;
   font-size: 12px !important;
 }
+
+.date-label{
+  width: 20% !important;
+}
+
+.date-field{
+  width: 60% !important;
+}

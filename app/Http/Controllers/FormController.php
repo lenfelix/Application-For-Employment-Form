@@ -18,13 +18,13 @@ class FormController extends Controller
     {
         $data = $request->all();
 
-        return $data;
+        // return $data;
 
         $dateOfBirth = $data['Date of Birth'];
-        $formattedDateOfBirth = Carbon::createFromFormat('d-m-Y', $dateOfBirth)->toDateTimeString();
+        $formattedDateOfBirth = Carbon::createFromFormat('Y-m-d\TH:i:s.uO', $dateOfBirth)->format('Y-m-d H:i:s');
         
         $earliestCommencement = $data['Earliest Commencement Date'];
-        $formattedearliestCommencement = Carbon::createFromFormat('d-m-Y', $earliestCommencement)->toDateTimeString();
+        $formattedearliestCommencement = Carbon::createFromFormat('Y-m-d\TH:i:s.uO', $earliestCommencement)->format('Y-m-d H:i:s');
 
         $user = User::create([
             'position' => $data['Position'],
@@ -38,8 +38,8 @@ class FormController extends Controller
             'citizenship' => $data['Citizenship'],
             'race' => $data['Race'],
             'phone' => $data['H/Phone'],
-            'marital_status' => $data['Matital Status'],
-            'driving_license' => $data['Driving Liscense'],
+            'marital_status' => $data['Marital Status'],
+            'driving_license' => $data['Driving License'],
             'current_salary' => $data['Current Salary'],
             'earliest_commencement_date' => $formattedearliestCommencement,
             'expected_salary' => $data['Expected Salary'],
@@ -137,13 +137,13 @@ class FormController extends Controller
 
         $declaration = $data['declaration']; 
         $dateOfDeclaration = $data['Date'];
-        $formattedDateOfDeclaration = Carbon::createFromFormat('d-m-Y', $dateOfDeclaration)->toDateTimeString();
+        $formattedDateOfDeclaration = Carbon::createFromFormat('Y-m-d\TH:i:s.uO', $dateOfDeclaration)->format('Y-m-d H:i:s');
         
         $declaration = Declaration::create([
             'medical_condition' => $declaration['medicalCondition'],
             'conviction' => $declaration['conviction'],
             'business_involvement' => $declaration['businessInvolvement'],
-            'signature' => $data['signature']['signature'],
+            'signature' => $data['signature'],
             'date' => $formattedDateOfDeclaration,
         ]);
 

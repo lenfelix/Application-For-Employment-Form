@@ -43,14 +43,18 @@
 
 <script>
 export default {
-methods: {
-  handleQuestionInput(category, event) {
-    const data = this.$store.state.formData;
+  methods: {
+    handleQuestionInput(category, event) {
+      const data = this.$store.state.formData;
 
-    data.questionnaires[category] = event.target.value;
+      if (!data.questionnaires) {
+        data.questionnaires = {};
+      }
 
-    this.$store.commit('updateFormData', data);
+      data.questionnaires[category] = event.target.value;
+
+      this.$store.commit('updateFormData', data);
+    },
   },
-},
 };
 </script>

@@ -1,5 +1,6 @@
 <template>
-    <div class="declaration-container">
+    <div class="declaration-container mt-4">
+      <div class="fw-bold my-3">PART VII - DECLARATION</div>
       <div class="declaration">
         <div class="question-container mt-4">
           <!-- Question 1 -->
@@ -76,7 +77,6 @@
         </div>
       </div>
   
-      <!-- Declaration -->
       <div class="mt-4">
         <strong>
           I hereby declare that all information given in this application for employment is true & correct. I acknowledge & agree that any false declaration, answer, or statement made by me on this application or any supplement thereto will render me disqualified and/or will be sufficient grounds for immediate dismissal.
@@ -88,23 +88,35 @@
         <canvas class="border border-dark" ref="signatureCanvas" @mousedown="startDrawing" @mousemove="draw" @mouseup="stopDrawing"></canvas>
         <button class="btn btn-secondary clear-button" @click="clearSignature">Clear Signature</button>
       </div>
-      <div class="m-auto">
-        <InputBlank label="Date" maxWordCount="50" v-model="signatureDate" />
+      <div class="m-auto d-flex">
+        <div class="me-3 date-label">Date: </div>
+        <VueDatePicker 
+          v-model="signatureDate" 
+          auto-apply
+          :format="dateFormat"
+          :enable-time-picker="false" 
+          :disabled-dates="disabledAfterToday"/>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
-import InputBlank from './InputBlank.vue';
+import { ref, watch, computed } from 'vue';
 import { useStore } from 'vuex';
+
+const signatureDate = ref('');
+const dateFormat = 'dd-MM-yyyy';
+const disabledAfterToday = (date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return date > today
+}
 
 const $store = useStore();
 
 const drawing = ref(false);
 const signatureCanvas = ref(null);
-const signatureDate = ref('');
 
 const startDrawing = () => {
   drawing.value = true;
@@ -162,6 +174,7 @@ function updateFormData() {
       businessInvolvement: businessInvolvement.value === null ? 'NULL' : businessInvolvement.value === 'YES' ? businessInvolvementDetails.value : 'NO',
     },
     signature: signatureImage,
+    Date: signatureDate,
   };
   $store.commit('updateFormData', formData);
 }
