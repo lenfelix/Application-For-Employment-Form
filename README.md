@@ -22,6 +22,24 @@
    ```bash
    composer install
    ```
+   
+4. Install Node.js dependencies using npm:
+
+   ```bash
+   npm install
+   ```
+
+5. Run database migrations:
+
+   ```bash
+   php artisan migrate:fresh
+   ```
+
+6. Start the Laravel development server:
+
+   ```bash
+   php artisan serve
+   ```
 
 ### Frontend (Vue.js)
 
@@ -35,6 +53,12 @@
 
    ```bash
    npm install
+   ```
+
+3. Compile and run the frontend:
+
+   ```bash
+   npm run dev
    ```
 
 ## Configuration
@@ -55,8 +79,6 @@ Change the URL to match your backend server:
 const response = await axios.post('http://your-backend-url/api/submit-form', state.formData);
 ```
 
-
 ## Contact
 
-If you have any questions, feel free to contact me at lenfelix2808@gmail.com
-```
+If you have any questions or need further assistance, feel free to contact me at lenfelix2808@gmail.com
