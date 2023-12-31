@@ -1,7 +1,5 @@
 ```markdown
-# Application For Employment
-
-This application is designed for [describe the purpose of the application].
+## Application For Employment
 
 ## Installation
 
@@ -46,7 +44,7 @@ This application is designed for [describe the purpose of the application].
 The base URL for the backend API is set to `http://127.0.0.1:8000` by default. If your backend is running on a different URL, update it in the `store.js` file:
 
 ```javascript
-// File: vue/src/store.js
+// File: vue/src/stores/store.js
 
 const response = await axios.post('http://127.0.0.1:8000/api/submit-form', state.formData);
 ```
