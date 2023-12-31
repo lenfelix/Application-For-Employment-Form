@@ -14,6 +14,16 @@
         <div  class="flex-grow-1"></div>
         <button class="btn btn-primary" @click="handleSubmit">Submit</button>
     </div>
+
+    <Modal />
+
+
+    <div v-for="(errors, fieldName) in $store.state.formErrors" :key="fieldName">
+      <div v-for="error in errors" :key="error">
+        {{ error }}
+      </div>
+    </div>
+    
 </template>
 
 
@@ -25,6 +35,7 @@ import CharacteristicsRating from '@/components/CharacteristicsRating.vue';
 import Declaration from '@/components/Declaration.vue';
 import CustomTables from '@/components/CustomTable.vue';
 import Questionnaires from '@/components/Questionnaires.vue';
+import Modal from '@/components/Modal.vue';
 
 export default {
   components: {
@@ -33,6 +44,7 @@ export default {
     Declaration,
     CustomTables,
     Questionnaires,
+    Modal,
   },
   setup() {
     const formData = ref(null);
@@ -41,6 +53,7 @@ export default {
     const handleSubmit = () => {
         store.commit('updateFormData');
         store.dispatch('submitForm');
+        // store.commit('resetState');
     };
 
     return {

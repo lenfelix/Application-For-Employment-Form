@@ -11,11 +11,51 @@ use App\Models\Referee;
 use App\Models\Questionnaire;
 use App\Models\Declaration;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
+use App\Rules\NotNullInArray;
 
 class FormController extends Controller
 {
     public function submitForm(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            'Position' => 'required|string|max:50',
+            'Mode of Application' => 'required|string|max:20',
+            'Name' => 'required|string|max:50',
+            'Gender' => 'required|string|max:20',
+            'Address' => 'required|string|max:200',
+            'Email' => 'required|email|max:70',
+            'NRIC No' => 'required|string|max:20',
+            'Date of Birth' => 'required',
+            'Citizenship' => 'required|string|max:20',
+            'Race' => 'required|string|max:20',
+            'H/Phone' => 'required|string|max:20',
+            'Marital Status' => 'required|string|max:20',
+            'Driving License' => 'required|string|max:20',
+            'Current Salary' => 'required|string|max:20',
+            'Earliest Commencement Date' => 'required',
+            'Expected Salary' => 'required|string|max:20',
+
+            'questionnaires.achievement' => 'required|string',
+            'questionnaires.strengths' => 'required|string',
+            'questionnaires.weakness' => 'required|string',
+            'questionnaires.employer_describe' => 'required|string',
+            'ratings' => ['required', 'array', new NotNullInArray],
+
+
+            'declaration.medicalCondition' => 'required|string',
+            'declaration.conviction' => 'required|string',
+            'declaration.businessInvolvement' => 'required|string',
+            'signature' => 'required|string',
+            'Date' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+
         $data = $request->all();
 
         // return $data;
@@ -50,13 +90,13 @@ class FormController extends Controller
         foreach ($qualificationDatas as $qualificationData) {
             if (
                 $qualificationData['Period'] &&
-                $qualificationData['School / College / University Last Attended'] &&
+                $qualificationData['School_College_University_Last_Attended'] &&
                 $qualificationData['Language Stream'] &&
                 $qualificationData['Highest Standard']
             ) {
                 Qualification::create([
                     'period' => $qualificationData['Period'],
-                    'last_attended_school' => $qualificationData['School / College / University Last Attended'],
+                    'last_attended_school' => $qualificationData['School_College_University_Last_Attended'],
                     'language_stream' => $qualificationData['Language Stream'],
                     'highest_standard' => $qualificationData['Highest Standard'],
                 ]);

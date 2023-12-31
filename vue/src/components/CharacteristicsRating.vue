@@ -13,16 +13,22 @@
             {{ rating }}
           </label>
         </div>
+        <div class="text-danger">
+            {{ ratings[index] == null && errors['ratings'] != null ? 'This rating field is required.' : ''}}
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
 
 const $store = useStore();
+
+const errors = computed(() => $store.state.formErrors);
+const formData = computed(() => $store.state.formData);
 
 const ratings = ref([null, null, null, null, null, null, null, null]);
 

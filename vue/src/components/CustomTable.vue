@@ -6,7 +6,8 @@
           <thead>
             <tr>
               <th v-for="header in table">
-                {{ header }}
+                <div v-if="header == 'School_College_University_Last_Attended'">School / College / University Last Attended</div>
+                <div v-else> {{ header }} </div>
               </th>
             </tr>
           </thead>
@@ -42,7 +43,7 @@
           "PART V - OTHER INFORMATION (Referees who are not related to & whom you have known for at least 2 years)",
         ],
         tableHeader: [
-          ["Period", "School / College / University Last Attended", "Language Stream", "Highest Standard"],
+          ["Period", "School_College_University_Last_Attended", "Language Stream", "Highest Standard"],
           ["Period", "Name of Employer", "Position", "Salary", "Reason For Leaving"],
           ["Name", "Relationship", "Contact Number"],
           ["Name of Refree", "Occupation", "Name of Company", "Contact Number", "Years Known"],
@@ -57,26 +58,25 @@
       };
     },
     methods: {
-  handleInput(event, k, i, j) {
-    console.log("k is ", k);
-    const category = this.getCategory(k);
+      handleInput(event, k, i, j) {
+        // console.log("k is ", k);
+        const category = this.getCategory(k);
 
-    if (!this.tableData) {
-      this.tableData = {};
-    }
+        if (!this.tableData) {
+          this.tableData = {};
+        }
 
-    if (!this.tableData[category]) {
-      this.tableData[category] = [];
-    }
+        if (!this.tableData[category]) {
+          this.tableData[category] = [];
+        }
 
-    const updatedRow = {
-      ...(this.tableData[category][i] || {}),
-      [this.tableHeader[k][j]]: event.target.value,
-    };
+        const rowIndex = i;
 
-    this.tableData[category].splice(i, 1, updatedRow);
+        this.tableData[category][rowIndex] = this.tableData[category][rowIndex] || {};
 
-    this.$store.commit('updateFormData', this.tableData);
+        this.tableData[category][rowIndex][this.tableHeader[k][j]] = event.target.value;
+
+        this.$store.commit('updateFormData', this.tableData);
   },
   getCategory(tableTitle) {
     switch (tableTitle) {
