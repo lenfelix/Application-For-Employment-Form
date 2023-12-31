@@ -6,7 +6,8 @@
             <span class="close-button" @click="closeModal">&times;</span>
             <p class="fw-bold text-success">{{ successMessage }}</p>
 
-            <div>
+            <div class="headerContainer">
+                <img class="logo" :src="logo" alt="Logo"/>
                 <h3 class="text-center fw-bold">Application For Employment</h3>
             </div>
             <div class="d-flex mt-5">
@@ -211,12 +212,10 @@
 </template>
 
 <script setup>
-    import {
-        computed
-    } from 'vue';
-    import {
-        useStore
-    } from 'vuex';
+    import { computed } from 'vue';
+    import { useStore } from 'vuex';
+    import logo from '@/assets/Realstar.png';
+
 
     const store = useStore();
 

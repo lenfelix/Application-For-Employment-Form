@@ -133,3 +133,16 @@ input[type="checkbox"] {
 .date-field{
   width: 60% !important;
 }
+
+.headerContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo{
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
