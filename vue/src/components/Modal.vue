@@ -7,7 +7,7 @@
             <p class="fw-bold text-success">{{ successMessage }}</p>
 
             <div class="headerContainer">
-                <img class="logo" :src="logo" alt="Logo"/>
+                <!-- <img class="logo" :src="logo" alt="Logo"/> -->
                 <h3 class="text-center fw-bold">Application For Employment</h3>
             </div>
             <div class="d-flex mt-5">

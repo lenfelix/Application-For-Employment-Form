@@ -1,29 +1,32 @@
 
 <template>
-    <PersonalInfo />
+  <div class="background">
+    <div class="form-box">
+      <PersonalInfo />
 
-    <CustomTables />
+      <CustomTables />
 
-    <Questionnaires />
+      <Questionnaires />
 
-    <CharacteristicsRating />
+      <CharacteristicsRating />
 
-    <Declaration />
+      <Declaration />
 
-    <div class="d-flex">
-        <div  class="flex-grow-1"></div>
-        <button class="btn btn-primary" @click="handleSubmit">Submit</button>
-    </div>
+      <div class="d-flex">
+          <div  class="flex-grow-1"></div>
+          <button class="btn btn-primary" @click="handleSubmit">Submit</button>
+      </div>
 
-    <Modal />
+      <Modal />
 
 
-    <div v-for="(errors, fieldName) in $store.state.formErrors" :key="fieldName">
-      <div v-for="error in errors" :key="error">
-        {{ error }}
+      <div v-for="(errors, fieldName) in $store.state.formErrors" :key="fieldName">
+        <div v-for="error in errors" :key="error">
+          {{ error }}
+        </div>
       </div>
     </div>
-    
+  </div>
 </template>
 
 
